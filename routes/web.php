@@ -99,6 +99,7 @@ Route::prefix('admin')->middleware('auth.admin')->group(function () {
     Route::post('/settings', [\App\Http\Controllers\Admin\SettingsController::class, 'update'])->name('admin.settings.update');
 
     // Password
+    Route::get('/ubah-password', fn() => view('admin.password.index'))->name('admin.password.index');
     Route::post('/ubah-password', [\App\Http\Controllers\Admin\PasswordController::class, 'update'])->name('admin.password.update');
 });
 
@@ -129,6 +130,7 @@ Route::prefix('guru')->middleware('auth.guru')->group(function () {
     Route::get('/ruang-ujian/{id}/export-excel', [\App\Http\Controllers\Guru\MonitoringController::class, 'exportExcel'])->name('guru.monitoring.export-excel');
     Route::get('/ruang-ujian/{id}/export-analisis', [\App\Http\Controllers\Guru\MonitoringController::class, 'exportAnalisis'])->name('guru.monitoring.export-analisis');
 
+    Route::get('/ubah-password', fn() => view('guru.password.index'))->name('guru.password.index');
     Route::post('/ubah-password', [\App\Http\Controllers\Guru\PasswordController::class, 'update'])->name('guru.password.update');
 });
 
@@ -141,5 +143,6 @@ Route::prefix('siswa')->middleware('auth.siswa')->group(function () {
     Route::post('/ujian/{id}/save-answer', [\App\Http\Controllers\Siswa\UjianController::class, 'saveAnswer'])->name('siswa.ujian.save-answer');
     Route::post('/ujian/{id}/submit', [\App\Http\Controllers\Siswa\UjianController::class, 'submit'])->name('siswa.ujian.submit');
     Route::get('/ujian/{id}/time-sync', [\App\Http\Controllers\Siswa\UjianController::class, 'timeSync'])->name('siswa.ujian.time-sync');
+    Route::get('/ubah-password', fn() => view('siswa.password.index'))->name('siswa.password.index');
     Route::post('/ubah-password', [\App\Http\Controllers\Siswa\PasswordController::class, 'update'])->name('siswa.password.update');
 });
