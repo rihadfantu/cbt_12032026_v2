@@ -56,6 +56,13 @@
 
             <!-- Siswa Form -->
             <div id="form-siswa">
+                <!-- Login Mode Toggle -->
+                <div class="flex bg-gray-100 rounded-lg p-1 mb-4">
+                    <button type="button" onclick="switchLoginMode('biasa')" id="mode-biasa"
+                            class="flex-1 py-1.5 text-xs rounded-md font-medium transition-all mode-btn active-mode">Login Biasa</button>
+                    <button type="button" onclick="switchLoginMode('token')" id="mode-token"
+                            class="flex-1 py-1.5 text-xs rounded-md font-medium transition-all mode-btn">Login + Token</button>
+                </div>
                 <form method="POST" action="{{ route('siswa.login') }}">
                     @csrf
                     <div class="mb-4">
@@ -68,9 +75,9 @@
                         <input type="password" name="password" required placeholder="Masukkan Password"
                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm">
                     </div>
-                    <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Token Ujian <span class="text-gray-400 font-normal">(opsional)</span></label>
-                        <input type="text" name="token" placeholder="Token dari pengawas (opsional)"
+                    <div id="token-field" class="mb-4 hidden">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Token Ujian</label>
+                        <input type="text" name="token" id="token-input" placeholder="Token dari pengawas"
                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none text-sm uppercase">
                     </div>
                     <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-medium transition-colors text-sm">
@@ -124,6 +131,8 @@
     <style>
         .active-tab { background-color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); color: #1d4ed8; }
         .tab-btn { color: #6b7280; }
+        .active-mode { background-color: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); color: #1d4ed8; }
+        .mode-btn { color: #6b7280; }
     </style>
     <script>
         function switchTab(tab) {
@@ -135,6 +144,19 @@
             document.getElementById('tab-admin').classList.remove('active-tab');
             document.getElementById('form-' + tab).classList.remove('hidden');
             document.getElementById('tab-' + tab).classList.add('active-tab');
+        }
+        function switchLoginMode(mode) {
+            const tokenField = document.getElementById('token-field');
+            const tokenInput = document.getElementById('token-input');
+            document.getElementById('mode-biasa').classList.remove('active-mode');
+            document.getElementById('mode-token').classList.remove('active-mode');
+            document.getElementById('mode-' + mode).classList.add('active-mode');
+            if (mode === 'token') {
+                tokenField.classList.remove('hidden');
+            } else {
+                tokenField.classList.add('hidden');
+                tokenInput.value = '';
+            }
         }
     </script>
 </body>
